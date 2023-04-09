@@ -41,7 +41,8 @@ Private Sub Class_Initialize()
 End Sub
 
     
-Sub run_game_loop(game As SnekGame, gui As SnekGUI)
+'Sub run_game_loop(game As SnekGame, gui As SnekGUI)
+Sub run_game_loop(game, gui)
     Debug.Print "Starting game loop"
     move_dir = "E"
     
@@ -67,8 +68,11 @@ Sub run_game_loop(game As SnekGame, gui As SnekGUI)
             frame_no = frame_no + 1
             frame_timer = Timer
             'Debug.Print "-Frame " & vbTab & frame_no
-            gui.render_board game.snek_body, game.apples
-            gui.update_debug_stats outer_loop_no, tick_no, frame_no, game_timer, game.snek_body.Count - 1
+            
+            'gui.render_board game.snek_body, game.apples
+            gui.render_board game
+            'gui.update_debug_stats outer_loop_no, tick_no, frame_no, game_timer, game.snek_body.Count - 1
+            gui.update_debug_stats outer_loop_no, tick_no, frame_no, game_timer, -1
             
 
         End If
@@ -81,12 +85,7 @@ Sub run_game_loop(game As SnekGame, gui As SnekGUI)
         Loop
         outer_loop_timer = Timer
         
-        If game.game_on Then
-            Debug.Print "ON"
-        Else
-            Debug.Print "OFF"
-        
-        End If
+
         
 '        If frame_no >= 200 Then
 '

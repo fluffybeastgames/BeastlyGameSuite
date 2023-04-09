@@ -93,8 +93,7 @@ Public Function tick(ByVal input_dir As String)
         Debug.Print "ERROR invalid input direction"
     End If
     
-    
-    
+
     'Debug.Print "Moving " & input_dir & " from " & last_row & ", " & last_col & " to " & target_row & ", " & target_col
     
     If valid_move(target_row, target_col) Then
