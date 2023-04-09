@@ -17,6 +17,9 @@ Public tick_duration As Double ' the closer to 0, the fast the game moves, so th
 Public difficulty As Double ' defined as ticks per second
 Const DIFFUCLTY_STARTING As Double = 2.75
 Const DIFFUCLTY_MAX As Double = 10
+'Const num_players As Integer = 1
+Public num_players As Integer
+
 '
 
 Private Sub Class_Initialize()
@@ -24,6 +27,7 @@ Private Sub Class_Initialize()
    
    Set snek_body = New Collection
    Set apples = New Collection
+   num_players = 1
 
 End Sub
 
@@ -46,7 +50,14 @@ Public Function init(ByVal rows As Integer, ByVal cols As Integer, ByVal num_app
     
 End Function
 
-
+Public Sub end_game()
+    response = MsgBox("Thanks for playing! Your score is " & snek_body.Count - 1 & ".", vbRetryCancel, "Game Over")
+    If response = vbRetry Then
+        MsgBox "TO DO - new game :)"
+    
+    End If
+    
+End Sub
 Property Get cols() As Integer
     cols = num_cols
 End Property

@@ -8,7 +8,7 @@ Sub create_snek_sheet()
     boolAlreadyExists = False
     
     For Each s In ThisWorkbook.Sheets
-        If s.name = "Snek" Then
+        If s.Name = "Snek" Then
             boolAlreadyExists = True
             Exit For
         End If
@@ -45,7 +45,7 @@ Sub create_snek_sheet()
         Dim rngBtnNewGame As Range, rngBtnGameSettings As Range, btnNewGame As Button, btnGameSettings As Button
             
         Set wsSnek = ActiveWorkbook.Sheets.Add(After:=ActiveWorkbook.Worksheets(ActiveWorkbook.Worksheets.Count)) 'Create the new worksheet
-        wsSnek.name = "Snek"
+        wsSnek.Name = "Snek"
         
         With wsSnek.Range("C3")
             .Font.Bold = True
@@ -54,7 +54,7 @@ Sub create_snek_sheet()
         End With
         
         Set rngBoard = wsSnek.Range("B6")
-        wsSnek.Names.Add name:="Game_Board_Top_Left", RefersTo:=rngBoard
+        wsSnek.Names.Add Name:="Game_Board_Top_Left", RefersTo:=rngBoard
         
         
         'Add New and Settings buttons and bind functionality to them
@@ -66,11 +66,11 @@ Sub create_snek_sheet()
         Set btnGameSettings = wsSnek.Buttons.Add(rngBtnGameSettings.Left, rngBtnGameSettings.Top, rngBtnGameSettings.Width, rngBtnGameSettings.Height)
         
         btnNewGame.Caption = "New Game"
-        btnNewGame.name = "BtnNewGame"
+        btnNewGame.Name = "BtnNewGame"
         btnNewGame.OnAction = "start_new_snek_game"
         
         btnGameSettings.Caption = "Settings"
-        btnGameSettings.name = "BtnSettings"
+        btnGameSettings.Name = "BtnSettings"
         btnGameSettings.OnAction = "open_snek_settings"
                      
         'Clean up
@@ -80,6 +80,8 @@ Sub create_snek_sheet()
         Set rngBtnGameSettings = Nothing
         Set btnNewGame = Nothing
         Set btnGameSettings = Nothing
+        
+        
         
         Application.ScreenUpdating = True
         
@@ -144,15 +146,15 @@ Private Sub DisableArrowKeys()
     Application.OnKey "{LEFT}", ""
     Application.OnKey "{RIGHT}", ""
     
-'    Application.OnKey "W", ""
-'    Application.OnKey "A", ""
-'    Application.OnKey "S", ""
-'    Application.OnKey "D", ""
-'
-'    Application.OnKey "w", ""
-'    Application.OnKey "a", ""
-'    Application.OnKey "s", ""
-'    Application.OnKey "d", ""
+    Application.OnKey "W", ""
+    Application.OnKey "A", ""
+    Application.OnKey "S", ""
+    Application.OnKey "D", ""
+
+    Application.OnKey "w", ""
+    Application.OnKey "a", ""
+    Application.OnKey "s", ""
+    Application.OnKey "d", ""
     
     
 End Sub

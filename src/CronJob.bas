@@ -8,7 +8,7 @@ Sub create_cron_sheet()
     boolAlreadyExists = False
     
     For Each s In ThisWorkbook.Sheets
-        If s.name = "Cron" Then
+        If s.Name = "Cron" Then
             boolAlreadyExists = True
             Exit For
         End If
@@ -45,32 +45,41 @@ Sub create_cron_sheet()
         Dim rngBtnNewGame As Range, rngBtnGameSettings As Range, btnNewGame As Button, btnGameSettings As Button
             
         Set wsGame = ActiveWorkbook.Sheets.Add(After:=ActiveWorkbook.Worksheets(ActiveWorkbook.Worksheets.Count)) 'Create the new worksheet
-        wsGame.name = "Cron"
+        wsGame.Name = "Cron"
         
-        With wsGame.Range("C3")
+        With wsGame.Cells
+            .Interior.Color = RGB(55, 55, 55)
+            .Font.Color = RGB(255, 255, 255)
+            .HorizontalAlignment = xlRight ' make it easier to read debug text
+            .Borders.LineStyle = Excel.XlLineStyle.xlLineStyleNone
+        End With
+        
+        With wsGame.Range("B1")
+            .Font.Name = "Algerian"
             .Font.Bold = True
-            .Font.Size = 24
+            .Font.Size = 36
+            .HorizontalAlignment = xlLeft
             .value = "CRON"
         End With
         
-        Set rngBoard = wsGame.Range("B6")
-        wsGame.Names.Add name:="Game_Board_Top_Left", RefersTo:=rngBoard
+        Set rngBoard = wsGame.Range("C5")
+        wsGame.Names.Add Name:="Game_Board_Top_Left", RefersTo:=rngBoard
         
         
         'Add New and Settings buttons and bind functionality to them
         
-        Set rngBtnNewGame = wsGame.Range("F3:H3")
-        Set rngBtnGameSettings = wsGame.Range("J3:L3")
+        Set rngBtnNewGame = wsGame.Range("B3:B3")
+        Set rngBtnGameSettings = wsGame.Range("B4:B4")
                      
         Set btnNewGame = wsGame.Buttons.Add(rngBtnNewGame.Left, rngBtnNewGame.Top, rngBtnNewGame.Width, rngBtnNewGame.Height)
         Set btnGameSettings = wsGame.Buttons.Add(rngBtnGameSettings.Left, rngBtnGameSettings.Top, rngBtnGameSettings.Width, rngBtnGameSettings.Height)
         
         btnNewGame.Caption = "New Game"
-        btnNewGame.name = "BtnNewGame"
+        btnNewGame.Name = "BtnNewGame"
         btnNewGame.OnAction = "start_new_cron_game"
         
         btnGameSettings.Caption = "Settings"
-        btnGameSettings.name = "BtnSettings"
+        btnGameSettings.Name = "BtnSettings"
         btnGameSettings.OnAction = "open_cron_settings"
                      
         'Clean up
@@ -97,8 +106,8 @@ Sub start_new_cron_game()
 
     'Gather game paramters
     Dim rows As Integer, cols As Integer, apples As Integer
-    rows = 30
-    cols = 50
+    rows = 66
+    cols = 99
     
     'Initiate game objects and states and start the game loop
     main_cron rows, cols
@@ -143,15 +152,15 @@ Private Sub DisableArrowKeys()
     Application.OnKey "{LEFT}", ""
     Application.OnKey "{RIGHT}", ""
     
-'    Application.OnKey "W", ""
-'    Application.OnKey "A", ""
-'    Application.OnKey "S", ""
-'    Application.OnKey "D", ""
-'
-'    Application.OnKey "w", ""
-'    Application.OnKey "a", ""
-'    Application.OnKey "s", ""
-'    Application.OnKey "d", ""
+    Application.OnKey "W", ""
+    Application.OnKey "A", ""
+    Application.OnKey "S", ""
+    Application.OnKey "D", ""
+
+    Application.OnKey "w", ""
+    Application.OnKey "a", ""
+    Application.OnKey "s", ""
+    Application.OnKey "d", ""
     
     
 End Sub

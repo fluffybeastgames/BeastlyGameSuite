@@ -23,7 +23,6 @@ Private frame_no As Long ' How many frames have been rendered
 
 Private game_timer As Double
 
-
 Private Sub Class_Initialize()
     outer_loop_duration = 1 / 1000 ' target seconds per check if tick or frame needs to be advanced
     frame_duration = 1 / 60 ' target seconds per frame
@@ -36,23 +35,19 @@ Private Sub Class_Initialize()
     outer_loop_no = 0
     tick_no = 0
     frame_no = 0
-        
-    
 End Sub
 
-    
-'Sub run_game_loop(game As SnekGame, gui As SnekGUI)
 Sub run_game_loop(game, gui)
     Debug.Print "Starting game loop"
-    move_dir = "E"
+    move_dir_p1 = "S"
+    move_dir_p2 = "S"
     
     Do While game.game_on
         outer_loop_no = outer_loop_no + 1
         
         ' Check for user input
-        '''''game.input = check_for_keyboard_input()
-        
-        move_dir = check_for_keyboard_input(move_dir)
+        move_dir_p1 = check_for_keyboard_input_arrows(move_dir_p1)
+        move_dir_p2 = check_for_keyboard_input_WASD(move_dir_p2)
         
         If Timer - tick_timer >= game.tick_duration Then
             ' Process user input and update the simulation by one step
@@ -60,21 +55,22 @@ Sub run_game_loop(game, gui)
             tick_timer = Timer
             
             'Debug.Print "--Tick " & vbTab & tick_no
-            game.game_on = game.tick(move_dir) ' tick tock don't let the game stop - main game step logic is in here!
+            
+            If game.num_players = 1 Then
+                game.game_on = game.tick(move_dir_p1) ' tick tock don't let the game stop - main game step logic is in here!
+            Else
+                game.game_on = game.tick(move_dir_p1, move_dir_p2) ' tick tock don't let the game stop - main game step logic is in here!
+            End If
             
         End If
         
         If Timer - frame_timer >= frame_duration Then
             frame_no = frame_no + 1
             frame_timer = Timer
-            'Debug.Print "-Frame " & vbTab & frame_no
-            
-            'gui.render_board game.snek_body, game.apples
             gui.render_board game
             'gui.update_debug_stats outer_loop_no, tick_no, frame_no, game_timer, game.snek_body.Count - 1
             gui.update_debug_stats outer_loop_no, tick_no, frame_no, game_timer, -1
             
-
         End If
     
         DoEvents ' Yield system if need be
@@ -85,29 +81,41 @@ Sub run_game_loop(game, gui)
         Loop
         outer_loop_timer = Timer
         
-
-        
-'        If frame_no >= 200 Then
-'
-'            Debug.Print "CANCELLING"
-'            game.game_on = False
-'        End If
-'
     Loop
+    
+    game.end_game
+    
+    
     
 End Sub
 
 
-Private Function check_for_keyboard_input(move_dir)
+Private Function check_for_keyboard_input_arrows(move_direction)
     If GetAsyncKeyState(vbKeyUp) And move_direction <> "S" Then
-        check_for_keyboard_input = "N"
+        check_for_keyboard_input_arrows = "N"
     ElseIf GetAsyncKeyState(vbKeyDown) And move_direction <> "N" Then
-        check_for_keyboard_input = "S"
+        check_for_keyboard_input_arrows = "S"
     ElseIf GetAsyncKeyState(vbKeyLeft) And move_direction <> "E" Then
-        check_for_keyboard_input = "W"
+        check_for_keyboard_input_arrows = "W"
     ElseIf GetAsyncKeyState(vbKeyRight) And move_direction <> "W" Then '
-        check_for_keyboard_input = "E"
+        check_for_keyboard_input_arrows = "E"
     Else
-        check_for_keyboard_input = move_dir
+        check_for_keyboard_input_arrows = move_direction
+    End If
+End Function
+
+
+
+Private Function check_for_keyboard_input_WASD(move_direction)
+    If GetAsyncKeyState(VK_W) And move_direction <> "S" Then
+        check_for_keyboard_input_WASD = "N"
+    ElseIf GetAsyncKeyState(VK_S) And move_direction <> "N" Then
+        check_for_keyboard_input_WASD = "S"
+    ElseIf GetAsyncKeyState(VK_A) And move_direction <> "E" Then
+        check_for_keyboard_input_WASD = "W"
+    ElseIf GetAsyncKeyState(VK_D) And move_direction <> "W" Then '
+        check_for_keyboard_input_WASD = "E"
+    Else
+        check_for_keyboard_input_WASD = move_direction
     End If
 End Function

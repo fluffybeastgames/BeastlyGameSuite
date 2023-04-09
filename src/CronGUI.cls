@@ -21,7 +21,7 @@ Sub init(ByVal rows As Integer, ByVal cols As Integer)
     Set wsCron = ThisWorkbook.Worksheets("Cron")
     Set rngBoardTopLeft = wsCron.Range("Game_Board_Top_Left")
     Set rngBoard = wsCron.Range(rngBoardTopLeft.Address, rngBoardTopLeft.Offset(rows - 1, cols - 1).Address)
-    Set rngDebugStats = wsCron.Range("O1:Z5")
+    Set rngDebugStats = wsCron.Range("B1:M5").Offset(0, cols + 1)
     
     prep_game_sheet
 End Sub
@@ -30,10 +30,19 @@ End Sub
 Sub prep_game_sheet()
     ' Result colors and borders/text
     With wsCron.Cells
+        .ClearContents
         .Interior.Color = RGB(55, 55, 55)
         .Font.Color = RGB(255, 255, 255)
         .HorizontalAlignment = xlRight ' make it easier to read debug text
         .Borders.LineStyle = Excel.XlLineStyle.xlLineStyleNone
+    End With
+    
+    With wsCron.Range("B1")
+        .Font.Name = "Algerian"
+        .Font.Bold = True
+        .Font.Size = 36
+        .HorizontalAlignment = xlLeft
+        .value = "CRON"
     End With
     
     'Setup board area
@@ -44,13 +53,18 @@ Sub prep_game_sheet()
         .HorizontalAlignment = xlCenter ' center text this range
         .VerticalAlignment = xlCenter ' center text this range
         .Font.Bold = True
-            
+        
+        With .Borders
+            .LineStyle = xlContinuous
+            .Color = vbGrey
+            .Weight = xlThin
+        End With
+        
         'Add thick borders around the edges of the board
         .Borders(xlEdgeTop).Weight = xlThick
         .Borders(xlEdgeBottom).Weight = xlThick
         .Borders(xlEdgeLeft).Weight = xlThick
         .Borders(xlEdgeRight).Weight = xlThick
-        
 
     End With
             
