@@ -29,6 +29,9 @@ End Sub
 
 
 Sub prep_game_sheet()
+    Application.ScreenUpdating = False
+
+    
     ' Result colors and borders/text
     With wsSnek.Cells
         .Interior.Color = RGB(110, 170, 70)
@@ -59,35 +62,50 @@ Sub prep_game_sheet()
         .Borders(xlEdgeRight).Weight = xlThick
     End With
                 
-    rngDebugStats.Cells(1, 1).value = "Elapsed"
-    rngDebugStats.Cells(1, 2).value = "Outer Loop"
-    rngDebugStats.Cells(1, 3).value = "Ticks"
-    rngDebugStats.Cells(1, 4).value = "Frames"
-    rngDebugStats.Cells(1, 5).value = "FPS"
-    rngDebugStats.Cells(1, 6).value = "Score"
+    rngDebugStats.Cells(1, 1).Value = "Elapsed"
+    rngDebugStats.Cells(1, 2).Value = "Outer Loop"
+    rngDebugStats.Cells(1, 3).Value = "Ticks"
+    rngDebugStats.Cells(1, 4).Value = "Frames"
+    rngDebugStats.Cells(1, 5).Value = "FPS"
+    rngDebugStats.Cells(1, 6).Value = "Score"
+    
+    
+
+    With wsSnek.Range("B3")
+        .Font.Bold = True
+        .Font.Size = 24
+        .Value = "SNEK"
+        .HorizontalAlignment = xlLeft
+    End With
+    With wsSnek.Range("B4")
+        .Font.Bold = True
+        .Font.Size = 14
+        .Value = "Feed the hungry critter! Change directions with the arrow keys"
+        .HorizontalAlignment = xlLeft
+    End With
+
     
     '' Hide rows we won't need
     'wsSnek.Range("A20:A" & rows.Count).EntireRow.Hidden = True
     'wsSnek.Range("A20:A" & rows.Count).EntireRow.Hidden = True
     'wsSnek.Range(Cells(1, 20), Cells(1, Columns.Count)).EntireColumn.Hidden = True
+    
+    Application.ScreenUpdating = True
 End Sub
 
 'gui.update_debug_stats outer_loop_no, ti, frame_no, game_timer
-
 Sub update_debug_stats(outer_loop_no, tick_no, frame_no, game_timer, score)
 
     game_duration = Timer - game_timer
-    rngDebugStats.Cells(2, 1).value = Round(game_duration, 2)
-    rngDebugStats.Cells(2, 2).value = outer_loop_no
-    rngDebugStats.Cells(2, 3).value = tick_no
-    rngDebugStats.Cells(2, 4).value = frame_no
-    rngDebugStats.Cells(2, 5).value = Round(frame_no / game_duration, 2)
-    rngDebugStats.Cells(2, 6).value = score
+    rngDebugStats.Cells(2, 1).Value = Round(game_duration, 2)
+    rngDebugStats.Cells(2, 2).Value = outer_loop_no
+    rngDebugStats.Cells(2, 3).Value = tick_no
+    rngDebugStats.Cells(2, 4).Value = frame_no
+    rngDebugStats.Cells(2, 5).Value = Round(frame_no / game_duration, 2)
+    rngDebugStats.Cells(2, 6).Value = score
     
         
 End Sub
-
-
 
 Public Sub render_board(game As SnekGame)
 
@@ -122,8 +140,7 @@ Public Sub render_board(game As SnekGame)
             End If
         Next c
     Next r
-    
-        
+     
 End Sub
 
 

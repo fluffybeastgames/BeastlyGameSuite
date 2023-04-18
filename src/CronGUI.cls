@@ -28,6 +28,8 @@ End Sub
 
 
 Sub prep_game_sheet()
+    Application.ScreenUpdating = False
+    
     ' Result colors and borders/text
     With wsCron.Cells
         .ClearContents
@@ -42,9 +44,18 @@ Sub prep_game_sheet()
         .Font.Bold = True
         .Font.Size = 36
         .HorizontalAlignment = xlLeft
-        .value = "CRON"
+        .Value = "CRON"
     End With
     
+    With wsCron.Range("D3:D4")
+        .Font.Bold = True
+        .Font.Size = 14
+        .HorizontalAlignment = xlLeft
+    End With
+        
+    wsCron.Range("D3").Value = "Change direction with WASD (pink player) or arrow keys (blue player)"
+    wsCron.Range("D4").Value = "Avoid all walls longer than your opponent to win!"
+        
     'Setup board area
     With rngBoard
         .Interior.Color = RGB(68, 84, 106)
@@ -68,17 +79,19 @@ Sub prep_game_sheet()
 
     End With
             
-    rngDebugStats.Cells(1, 1).value = "Elapsed"
-    rngDebugStats.Cells(1, 2).value = "Outer Loop"
-    rngDebugStats.Cells(1, 3).value = "Ticks"
-    rngDebugStats.Cells(1, 4).value = "Frames"
-    rngDebugStats.Cells(1, 5).value = "FPS"
-    rngDebugStats.Cells(1, 6).value = "Score"
+    rngDebugStats.Cells(1, 1).Value = "Elapsed"
+    rngDebugStats.Cells(1, 2).Value = "Outer Loop"
+    rngDebugStats.Cells(1, 3).Value = "Ticks"
+    rngDebugStats.Cells(1, 4).Value = "Frames"
+    rngDebugStats.Cells(1, 5).Value = "FPS"
+    rngDebugStats.Cells(1, 6).Value = "Score"
     
     '' Hide rows we won't need
     'wsCron.Range("A20:A" & rows.Count).EntireRow.Hidden = True
     'wsCron.Range("A20:A" & rows.Count).EntireRow.Hidden = True
     'wsCron.Range(Cells(1, 20), Cells(1, Columns.Count)).EntireColumn.Hidden = True
+    
+    Application.ScreenUpdating = True
 End Sub
 
 'gui.update_debug_stats outer_loop_no, ti, frame_no, game_timer
@@ -86,12 +99,12 @@ End Sub
 Sub update_debug_stats(outer_loop_no, tick_no, frame_no, game_timer, score)
 
     game_duration = Timer - game_timer
-    rngDebugStats.Cells(2, 1).value = Round(game_duration, 2)
-    rngDebugStats.Cells(2, 2).value = outer_loop_no
-    rngDebugStats.Cells(2, 3).value = tick_no
-    rngDebugStats.Cells(2, 4).value = frame_no
-    rngDebugStats.Cells(2, 5).value = Round(frame_no / game_duration, 2)
-    rngDebugStats.Cells(2, 6).value = score
+    rngDebugStats.Cells(2, 1).Value = Round(game_duration, 2)
+    rngDebugStats.Cells(2, 2).Value = outer_loop_no
+    rngDebugStats.Cells(2, 3).Value = tick_no
+    rngDebugStats.Cells(2, 4).Value = frame_no
+    rngDebugStats.Cells(2, 5).Value = Round(frame_no / game_duration, 2)
+    rngDebugStats.Cells(2, 6).Value = score
     
         
 End Sub

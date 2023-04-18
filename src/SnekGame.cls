@@ -21,7 +21,6 @@ Const DIFFUCLTY_MAX As Double = 10
 Public num_players As Integer
 
 '
-
 Private Sub Class_Initialize()
    Debug.Print "Creating a SnekGame"
    
@@ -37,25 +36,24 @@ Public Function init(ByVal rows As Integer, ByVal cols As Integer, ByVal num_app
    difficulty = DIFFUCLTY_STARTING
    tick_duration = 1 / difficulty ' target seconds per game tick
     
-    
    add_snek_segment 1, 1
    
    For i = 1 To num_apples
        add_apple
    Next i
-   
-   
+      
     
    game_on = True
     
 End Function
 
 Public Sub end_game()
-    response = MsgBox("Thanks for playing! Your score is " & snek_body.Count - 1 & ".", vbRetryCancel, "Game Over")
-    If response = vbRetry Then
-        MsgBox "TO DO - new game :)"
-    
-    End If
+    MsgBox "Thanks for playing! Your score is " & snek_body.Count - 1 & ".", vbOKOnly, "Game Over"
+'    response = MsgBox("Thanks for playing! Your score is " & snek_body.Count - 1 & ".", vbRetryCancel, "Game Over")
+'    If response = vbRetry Then
+'        MsgBox "TO DO - new game :)"
+'
+'    End If
     
 End Sub
 Property Get cols() As Integer
@@ -104,9 +102,7 @@ Public Function tick(ByVal input_dir As String)
         Debug.Print "ERROR invalid input direction"
     End If
     
-
     'Debug.Print "Moving " & input_dir & " from " & last_row & ", " & last_col & " to " & target_row & ", " & target_col
-    
     If valid_move(target_row, target_col) Then
         add_snek_segment target_row, target_col
         

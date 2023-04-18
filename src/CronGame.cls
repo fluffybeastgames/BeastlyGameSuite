@@ -33,20 +33,18 @@ Public Function init(ByVal rows As Integer, ByVal cols As Integer)
    num_cols = cols
    tick_duration = 1 / TICK_SPEED ' target seconds per game tick
     
-    ' player 1
+    ' player 1 (blue / arrow keys)
     add_cron_cell "W", 5, cols - 2, 1
     
     '''direction_player_1 = "S"
     
-    ' player 2
+    ' player 2 (pink / WASD keys)
     add_cron_cell "E", 5, 1, 2
     ''''direction_player_2 = "S"
-    
         
    game_on = True
     
 End Function
-
 
 Property Get cols() As Integer
     cols = num_cols
@@ -71,6 +69,7 @@ Public Sub end_game()
         MsgBox "Pink Player wins!"
     End If
 End Sub
+
 Public Function tick(ByVal input_dir_p1 As String, ByVal input_dir_p2 As String)
     If cron_body_player_1.Count <= 0 Then
         tick = False

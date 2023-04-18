@@ -13,7 +13,6 @@ Private outer_loop_duration As Double
 Private outer_loop_timer As Double
 Private outer_loop_no As Long ' Number of iterations of the outer do while game_on loop
 
-
 Private tick_timer As Double ' keep track of when the previous tick was initiated
 Private tick_no As Long ' How many game steps have we taken, aka how many times have we gone through the outer Do While loop
 
